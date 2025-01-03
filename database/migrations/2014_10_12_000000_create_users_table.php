@@ -8,17 +8,15 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('full_name');
-            $table->string('email')->unique();
-            $table->string('subscription_type')->nullable();
-            $table->date('subscription_start')->nullable();
-            $table->date('subscription_end')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->id(); // Columna ID (primary key)
+            $table->string('name'); // Agrega la columna `name`
+            $table->string('email')->unique(); // Columna email (única)
+            $table->string('password'); // Columna password
+            $table->string('remember_token')->nullable(); // Token para recordar sesión
+            $table->boolean('is_admin')->default(false); // Columna para identificar administradores
+            $table->timestamps(); // Columnas created_at y updated_at
         });
     }
-
     public function down()
     {
         Schema::dropIfExists('users');

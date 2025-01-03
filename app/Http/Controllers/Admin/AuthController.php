@@ -18,22 +18,31 @@ class AuthController extends Controller
     // Procesar el login
     public function login(Request $request)
     {
+        // Validar los datos de entrada
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+    
+        // Intentar autenticar al administrador
+        if (Auth::guard('admin')->attempt($credentials, $request->remember)) {
+            // Redirigir a la vista "welcome"
+            return redirect()->intended(route('welcome'));
         }
-
-        return back()->withErrors(['email' => 'Credenciales incorrectas']);
+    
+        // Si la autenticación falla, mostrar un mensaje de error
+        return back()->withErrors([
+            'email' => 'Las credenciales proporcionadas son incorrectas.',
+        ]);
     }
 
     // Cerrar sesión
     public function logout()
     {
+        // Cerrar la sesión del administrador
         Auth::guard('admin')->logout();
+
+        // Redirigir al formulario de login de admin
         return redirect()->route('admin.login');
     }
 }

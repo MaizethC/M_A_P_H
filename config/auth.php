@@ -41,11 +41,7 @@ return [
         'provider' => 'users',
     ],
 
-    'admin' => [ // Guard para administradores
-        'driver' => 'session',
-        'provider' => 'admins',
-    ],
-
+   
     'api' => [
         'driver' => 'token',
         'provider' => 'users',
@@ -75,10 +71,6 @@ return [
         'model' => App\Models\User::class,
     ],
 
-    'admins' => [ // Provider para administradores
-        'driver' => 'eloquent',
-        'model' => App\Models\Admin::class,
-    ],
 ],
 
     /*

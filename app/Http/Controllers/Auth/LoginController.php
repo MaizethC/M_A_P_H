@@ -10,23 +10,29 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/admin/dashboard'; // Ruta de redirección después del login
+    protected $redirectTo = '/'; // Ruta de redirección después del login
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //$this->middleware('guest')->except('logout');
     }
 
-    protected function guard()
+    // Procesar el login
+    public function login(Request $request)
     {
-        return Auth::guard('admin'); // Usa el guard 'admin'
-    }
+        // Validar los datos de entrada
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/admin/login'); // Redirige al formulario de login de administradores
+        if (Auth::attempt($credentials, $request->remember)) {
+            return redirect()->intended(route('lobby'));
+        }
+
+        // Si la autenticación falla, mostrar un mensaje de error
+        return back()->withErrors([
+            'email' => 'Las credenciales proporcionadas son incorrectas.',
+        ]);
     }
 }

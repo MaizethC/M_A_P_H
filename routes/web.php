@@ -5,6 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProfileController;
+
+// Ruta para mostrar el formulario de edición de perfil
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+// Ruta para actualizar el perfil
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+// Definir la ruta para el lobby
+Route::get('/lobby', function() {
+    return view('lobby');
+})->name('lobby');
 
 // Bandeja de entrada
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
@@ -34,3 +46,6 @@ Route::put('/users/{id}/activate', [UserController::class, 'activate'])->name('u
 Route::put('/users/{id}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
