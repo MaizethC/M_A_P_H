@@ -7,12 +7,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 
-// Ruta para mostrar el formulario de edición de perfil
+// Ruta para mostrar la vista de editar perfil
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
-// Ruta para actualizar el perfil
+// Ruta para procesar la actualización del perfil
 Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
 // Definir la ruta para el lobby
 Route::get('/lobby', function() {
     return view('lobby');
