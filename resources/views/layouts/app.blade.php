@@ -15,6 +15,10 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- Estilos adicionales -->
+    @stack('styles')
+
 </head>
 <body>
     <div id="app">
